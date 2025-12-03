@@ -8,7 +8,7 @@ function App() {
       <h1>Welcome to Ember-IQ</h1>
       <SignedOut>
       <SignInButton mode="modal" >
-        <button>Sign up bokachoda</button>
+        <button>Sign up</button>
       </SignInButton>
       </SignedOut>
 
