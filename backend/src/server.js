@@ -6,7 +6,8 @@ import cors from "cors"
 import {serve} from "inngest/express"
 import { inngest } from "./lib/inngest.js"
 import { functions } from "./lib/inngest.js"
-
+import { clerkMiddleware } from "@clerk/express";
+import chatRoutes from "./routes/chatRoutes.js"
 
 // console.log(ENV.DB_URL); //Undefined if not config dotenv
 // console.log(ENV.PORT) //Undefined if not config dotenv
@@ -19,16 +20,23 @@ app.use(express.json())
 //credentials->Sever allows the browser to include cookies on request
 app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
 
+app.use(clerkMiddleware());//this add auth field to req object: req.auth()
+
 app.use("/api/inngest",serve({client:inngest, functions}))
+app.use("/api/chat", chatRoutes)
 
 
 app.get("/health", (req,res) => {
     res.status(200).json({"message":"Api is up and running"})
 })
 
-app.get("/books", (req,res) => {
-    res.status(200).json({"message":"Api is up and running for books"})
-})
+
+//When u pass an array of middleware to express it automatically flattens and 
+// executes the sequentially one by one
+// app.get("/video-calls",protectRoute, (req,res) => {
+//     res.status(200).json({"message":"This is a protected route"})
+// })
+
 
 //Make our app ready for deployment
 if(ENV.NODE_ENV === "production"){
