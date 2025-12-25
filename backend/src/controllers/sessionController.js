@@ -18,7 +18,7 @@ export async function createSession(req, res) {
 
     //Generate a unique call id for stream video
     //If two users use the same callId, they join the same call
-    const callId = `session_${Date.now}_${Math.random()
+    const callId = `session_${Date.now()}_${Math.random()
       .toString(36)
       .substring(7)}`;
 
@@ -73,7 +73,7 @@ export async function getMyRecentSessions(req, res) {
     const userId = req.user._id;
 
     //get session where user is either host or participant
-    const sessions = Session.find({
+    const sessions = await Session.find({
       status: "completed",
       $or: [{ host: userId }, { participant: userId }],
     })
@@ -91,7 +91,7 @@ export async function getSessionById(req, res) {
   try {
     const { id } = req.params;
 
-    const session = Session.findById(id)
+    const session = await Session.findById(id)
       .populate("host", "name email profileImage clerkId")
       .populate("participant", "name email profileImage clerkId");
 
@@ -114,10 +114,16 @@ export async function joinSession(req, res) {
 
     if (!session) return res.status(404).json({ message: "Session not found" });
 
+    if(session.status !== "active") return res.status(400).json({message:"Cannot join a complete session"})
+
+    if(session.host.toString() === userId.toString()){
+        return res.status(400).json({message:"Host cannot join their own session as participant"})
+    }
+
     //Check if session is already full- has a participant
     if (session.participant)
       return res
-        .status(404)
+        .status(409)
         .json({ message: "Sorry! session is already full" });
 
     session.participant = userId;
@@ -138,7 +144,7 @@ export async function endSession(req, res) {
     const { id } = req.params;
     const userId = req.user._id;
 
-    const session = Session.findById(id);
+    const session = await Session.findById(id);
 
     if (!session) return res.status(404).json({ message: "Session not found" });
 
@@ -152,8 +158,6 @@ export async function endSession(req, res) {
         return res.status(400).json({message:"Session is already completed"})
     }
 
-    session.status = "completed"
-    await session.save()
 
     //Delete stream video call
     const call = streamClient.video.call("default",session.callId)
@@ -162,6 +166,9 @@ export async function endSession(req, res) {
     //Delete stream chat channel
     const channel = chatClient.channel("messaging",session.callId)
     await channel.delete()
+
+    session.status = "completed";
+    await session.save();
 
     res.status(200).json({ message: "Session ended Successfully" });
 
