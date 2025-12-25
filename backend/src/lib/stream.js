@@ -1,4 +1,5 @@
 import {StreamChat} from "stream-chat"
+import { StreamClient } from "@stream-io/node-sdk";
 import { ENV } from "./env.js"
 
 
@@ -9,8 +10,11 @@ if(!apiKey || !apiSecret){
     console.error("STREAM_API_KEY or STREAM_API_SECRET is missing");
 }
 
+//For video calls
+export const streamClient = new StreamClient(apiKey, apiSecret)
+
 // Creates a server-side Stream Chat client.You need this client to:
-// create users,update users,generate tokens,create channels,moderate chats (ban, mute, etc.)
+// create users,update users,generate tokens,create channels,moderate ((chats)) (ban, mute, etc.)
 export const chatClient = StreamChat.getInstance(apiKey, apiSecret)
 
 //userData from clerk
