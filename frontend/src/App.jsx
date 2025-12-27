@@ -1,24 +1,25 @@
-import { SignedOut, SignedIn, SignInButton, SignOutButton, UserButton } from '@clerk/clerk-react'
-import './App.css'
+import { useUser } from '@clerk/clerk-react'
+import { Routes, Route, Navigate } from 'react-router'
+import HomePage from './pages/HomePage';
+import ProblemsPage from './pages/ProblemsPage';
+import {Toaster} from "react-hot-toast"
 
 function App() {
-
+  const {isSignedIn} = useUser() //from clerk
   return (
     <>
-      <h1>Welcome to Ember-IQ</h1>
-      <SignedOut>
-      <SignInButton mode="modal" >
-        <button>Sign up</button>
-      </SignInButton>
-      </SignedOut>
+    
+    <Routes>
 
-      <SignedIn>
-        <SignOutButton/>
-      </SignedIn>
+      <Route path='/' element={<HomePage/>}/>
+      <Route path='/problems' element={isSignedIn ? <ProblemsPage/> : <Navigate to= {"/"}/>}/>
 
-      <UserButton/>
+    </Routes>
+
+    <Toaster/>
     </>
-  )
+    
+  );
 }
 
 export default App
