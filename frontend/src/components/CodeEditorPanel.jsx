@@ -2,6 +2,17 @@ import Editor from "@monaco-editor/react";
 import { Loader2Icon, PlayIcon } from "lucide-react";
 import { LANGUAGE_CONFIG } from "../data/problems";
 
+/**
+ * Render a code editor panel with a language selector, language icon, and run controls.
+ *
+ * @param {string} selectedLanguage - Key of the currently selected language from LANGUAGE_CONFIG.
+ * @param {string} code - Current editor content.
+ * @param {boolean} isRunning - Whether code execution is in progress (disables the Run button when true).
+ * @param {(event: React.ChangeEvent<HTMLSelectElement>) => void} onLanguageChange - Called when the language selection changes.
+ * @param {(value: string | undefined) => void} onCodeChange - Called when the editor content changes with the new code value.
+ * @param {() => void} onRunCode - Called when the Run button is clicked.
+ * @returns {JSX.Element} The code editor panel component.
+ */
 function CodeEditorPanel({
   selectedLanguage,
   code,

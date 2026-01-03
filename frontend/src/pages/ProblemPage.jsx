@@ -10,6 +10,12 @@ import { executeCode } from '../../../backend/src/lib/piston'
 import toast from 'react-hot-toast'
 import confetti from "canvas-confetti"
 
+/**
+ * Renders the problem page containing a problem description, a resizable code editor, and an output panel with language switching, code execution, and test validation.
+ *
+ * The component manages problem selection via route params, loads starter code for the chosen language, executes user code, normalizes and compares output against expected results, and provides visual feedback (confetti and toasts) for test outcomes.
+ * @returns {JSX.Element} The ProblemPage component element.
+ */
 function ProblemPage() {
 
     const {id} = useParams() //from dynamic route
