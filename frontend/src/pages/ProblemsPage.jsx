@@ -5,6 +5,13 @@ import { PROBLEMS } from "../data/problems";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
 import { getDifficultyBadgeClass } from "../lib/utils";
 
+/**
+ * Render the Practice Problems page showing a navigable list of problems and difficulty statistics.
+ *
+ * Uses the imported PROBLEMS data to build a card list of problems (each linking to /problem/{id}) and displays aggregate counts for Easy, Medium, and Hard problems.
+ *
+ * @returns {JSX.Element} The rendered ProblemsPage containing problem cards and a stats footer.
+ */
 function ProblemsPage() {
   const problems = Object.values(PROBLEMS);//converts the PROBLEMS object into array for mapping
 

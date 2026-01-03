@@ -1,4 +1,22 @@
 import { getDifficultyBadgeClass } from "../lib/utils";
+/**
+ * Render a detailed problem description view including header, selector, description, examples, and constraints.
+ *
+ * @param {Object} props
+ * @param {Object} props.problem - Detailed problem object.
+ * @param {string} props.problem.title - Problem title.
+ * @param {string} props.problem.difficulty - Difficulty label (e.g., "Easy", "Medium", "Hard").
+ * @param {string} props.problem.category - Problem category or tag.
+ * @param {Object} props.problem.description - Description content.
+ * @param {string} props.problem.description.text - Main description text.
+ * @param {string[]} props.problem.description.notes - Additional description notes.
+ * @param {Array<{input: string, output: string, explanation?: string}>} props.problem.examples - Example cases with input, output, and optional explanation.
+ * @param {string[]} props.problem.constraints - Constraint strings shown for the problem.
+ * @param {string} props.currentProblemId - The id of the currently selected problem.
+ * @param {(id: string) => void} props.onProblemChange - Callback invoked with the newly selected problem id.
+ * @param {Array<{id: string, title: string, difficulty: string}>} props.allProblems - List of available problems used to populate the selector.
+ * @returns {JSX.Element} The ProblemDescription component UI.
+ */
 function ProblemDescription({
   problem,
   currentProblemId,
