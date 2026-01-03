@@ -36,7 +36,7 @@ function ProblemsPage() {
           {problems.map((problem) => (
             <Link
               key={problem.id}
-              to={`/problem/${problem.id}`}
+              to={`/problem/${problem.id}`} //See App.jsx
               className="card bg-base-100 hover:scale-[1.01] transition-transform"
             >
               <div className="card-body">
