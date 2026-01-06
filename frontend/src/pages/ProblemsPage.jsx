@@ -8,6 +8,7 @@ import { getDifficultyBadgeClass } from "../lib/utils";
 function ProblemsPage() {
   const problems = Object.values(PROBLEMS);//converts the PROBLEMS object into array for mapping
 
+
   const easyProblemsCount = problems.filter(
     (p) => p.difficulty === "Easy"
   ).length;
