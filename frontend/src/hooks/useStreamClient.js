@@ -16,9 +16,10 @@ function useStreamClient(session, loadingSession, isHost, isParticipant) {
     let chatClientInstance = null;
 
     const initCall = async () => {
-      if (!session?.callId) return;
-      if (!isHost && !isParticipant) return;
-      if (session.status === "completed") return;
+      if (!session?.callId || (!isHost && !isParticipant) || session.status === "completed") {
+      setIsInitializingCall(false);
+      return;
+    }
 
       try {
         const { token, userId, userName, userImage } =
@@ -40,6 +41,9 @@ function useStreamClient(session, loadingSession, isHost, isParticipant) {
         setCall(videoCall);
 
         const apiKey = import.meta.env.VITE_STREAM_API_KEY;
+        if (!apiKey) {
+        throw new Error("Stream API Key is not provided");
+        }
         chatClientInstance = StreamChat.getInstance(apiKey);
 
         await chatClientInstance.connectUser(
@@ -59,7 +63,7 @@ function useStreamClient(session, loadingSession, isHost, isParticipant) {
         await chatChannel.watch();
         setChannel(chatChannel);
 
-        
+
       } catch (error) {
         toast.error("Failed to join video call");
         console.error("Error init call", error);
