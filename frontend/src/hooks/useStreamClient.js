@@ -16,10 +16,9 @@ function useStreamClient(session, loadingSession, isHost, isParticipant) {
     let chatClientInstance = null;
 
     const initCall = async () => {
-      if (!session?.callId || (!isHost && !isParticipant) || session.status === "completed") {
-      setIsInitializingCall(false);
-      return;
-    }
+    if (!session?.callId) return;
+    if (!isHost && !isParticipant) return;
+    if (session.status === "completed") return;
 
       try {
         const { token, userId, userName, userImage } =
@@ -41,9 +40,6 @@ function useStreamClient(session, loadingSession, isHost, isParticipant) {
         setCall(videoCall);
 
         const apiKey = import.meta.env.VITE_STREAM_API_KEY;
-        if (!apiKey) {
-        throw new Error("Stream API Key is not provided");
-        }
         chatClientInstance = StreamChat.getInstance(apiKey);
 
         await chatClientInstance.connectUser(
