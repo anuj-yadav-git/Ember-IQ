@@ -1,3 +1,8 @@
+/**
+ * Renders an output panel that displays a placeholder, the successful output, or error details based on `output`.
+ * @param {{success?: boolean, output?: string, error?: string} | null} output - If `null`, a placeholder message is shown. If an object, `success` determines whether `output` is rendered with success styling; otherwise `output` (if present) and `error` are rendered with error styling.
+ * @returns {JSX.Element} The output panel element.
+ */
 function OutputPanel({ output }) {
   return (
     <div className="h-full bg-base-100 flex flex-col">
