@@ -24,11 +24,13 @@ function DashboardPage() {
   const handleCreateRoom = () => {
     if (!roomConfig.problem || !roomConfig.difficulty) return;
 
+    //sending problem and difficulty to backend
     createSessionMutation.mutate(
       {
         problem: roomConfig.problem,
         difficulty: roomConfig.difficulty.toLowerCase(),
       },
+      //we are getting session from the BE controller
       {
         onSuccess: (data) => {
           setShowCreateModal(false);
