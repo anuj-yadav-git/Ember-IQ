@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 import { getAuth } from "@clerk/clerk-react";
 
 const axiosInstance = axios.create({
@@ -11,14 +11,14 @@ axiosInstance.interceptors.request.use(async (config) => {
   try {
     const { getToken } = getAuth();
     const token = await getToken();
-    
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
   } catch (error) {
     console.error("Error getting Clerk token:", error);
   }
-  
+
   return config;
 });
 
