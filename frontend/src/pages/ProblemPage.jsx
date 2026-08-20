@@ -9,7 +9,7 @@ import CodeEditorPanel from "../components/CodeEditorPanel";
 import { executeCode } from "../lib/piston";
 import toast from "react-hot-toast";
 import confetti from "canvas-confetti";
-
+ 
 function ProblemPage() {
   const { id } = useParams(); //from dynamic route
   const navigate = useNavigate();

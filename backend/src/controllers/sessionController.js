@@ -10,6 +10,7 @@ export async function createSession(req, res) {
     const userId = req.user._id; //mongodb id
     const clerkId = req.user.clerkId;
 
+    
     //Validation
     if (!problem || !difficulty)
       return res
@@ -63,6 +64,7 @@ export async function getActiveSessions(_, res) {
       .limit(20);
 
     res.status(200).json({ sessions });
+
   } catch (error) {
     console.log("Error in getActiveSessions controller:", error.message);
     res.status(500).json({ message: "Internal server error" });
@@ -82,6 +84,7 @@ export async function getMyRecentSessions(req, res) {
       .limit(20);
 
     res.status(200).json({ sessions });
+    
   } catch (error) {
     console.log("Error in getMyRecentSessions controller:", error.message);
     res.status(500).json({ message: "Internal server error" });

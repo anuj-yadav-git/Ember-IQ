@@ -25,7 +25,7 @@ const sessionSchema = new mongoose.Schema({
     enum:["active","completed"],
     default:"active"
   },
-  //Steam video call id
+  //Stream video call id
   callId:{
     type:String,
     default:""

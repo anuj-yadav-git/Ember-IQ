@@ -1,6 +1,7 @@
 import {Inngest} from "inngest";
 import { connectDB } from "./db.js";
 import User from "../models/User.js";
+
 import { deleteStreamUser, upsertStreamUser } from "./stream.js";
 
 export const inngest = new Inngest({ id: "ember-iq" });
@@ -12,8 +13,7 @@ const syncUser = inngest.createFunction(
   async ({ event}) => {
     await connectDB();
 
-    const { id, email_addresses, first_name, last_name, image_url } =
-      event.data;
+    const { id, email_addresses, first_name, last_name, image_url } = event.data;
     const newUser = {
       clerkId: id,
       //Get the first(primary) email address if it exists; otherwise give undefined
@@ -24,7 +24,7 @@ const syncUser = inngest.createFunction(
 
     await User.create(newUser);
 
-    //to do something else
+    //to do something else - like adding user to stream
     await upsertStreamUser({
       id: newUser.clerkId.toString(),
       name: newUser.name,
@@ -47,7 +47,7 @@ const deleteUserFromDB = inngest.createFunction(
 
     await User.deleteOne({clerkId:id})
 
-    //to do something else
+    //to do something else- like deleting user from stream
       await deleteStreamUser(id.toString())
   }
 );
