@@ -145,9 +145,4 @@ Ember-IQ/
 4. **Push** to your fork
 5. **Open a Pull Request** against the `main` branch
 
-## License
 
-License not specified. Please contact the repository owner for licensing information.
-
----
-[![README powered by ReadmeAI](https://img.shields.io/badge/README-powered%20by%20ReadmeAI-4c9be8?style=flat-square&logo=markdown)](https://www.readmeai.in)
